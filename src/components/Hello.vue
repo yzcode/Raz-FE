@@ -1,53 +1,84 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <h2>Pie Chart !</h2>
+    <div id="pie_chart" class="echarts"></div>
   </div>
 </template>
 
 <script>
+
+var echarts = require('echarts')
+
+var option = {
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b}: {c} ({d}%)'
+  },
+  legend: {
+    orient: 'vertical',
+    x: 'left',
+    data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+  },
+  series: [
+    {
+      name: '访问来源',
+      type: 'pie',
+      radius: ['50%', '70%'],
+      avoidLabelOverlap: false,
+      label: {
+        normal: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          show: true,
+          textStyle: {
+            fontSize: '30',
+            fontWeight: 'bold'
+          }
+        }
+      },
+      labelLine: {
+        normal: {
+          show: false
+        }
+      },
+      data: [
+        {value: 335, name: '直接访问'},
+        {value: 310, name: '邮件营销'},
+        {value: 234, name: '联盟广告'},
+        {value: 135, name: '视频广告'}
+      ]
+    }
+  ]
+}
+
 export default {
+  components: {
+  },
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
+  },
+  mounted () {
+    var pieChart = echarts.init(document.getElementById('pie_chart'))
+    pieChart.setOption(option)
+    setTimeout(() => {
+      option.series[0].data.push({value: 1548, name: '搜索引擎'})
+      pieChart.setOption(option)
+    }, 5000)
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+  .echarts {
+    height: 300px;
+    width: 500px;
+    text-align: center;
+    margin: auto;
+  }
 </style>
