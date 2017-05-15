@@ -1,15 +1,21 @@
 <template>
   <div id="app">
-    <div class="row">
-      <template v-for="variant in ['primary','secondary','success','outline-success','warning','danger','link']">
-        <div class="col-md-4 pb-2" v-for="size in ['sm','','lg']">
-          <b-button :size="size" :variant="variant" href="">
-            {{variant}} {{size}}
-          </b-button>
-        </div>
-      </template>
+    <b-navbar toggleable type="light" variant="faded">
+      <b-nav-toggle target="nav_collapse"></b-nav-toggle>
+      <b-link class="navbar-brand" to="#">
+        <span>Raz Monitor</span>
+      </b-link>
+      <b-collapse is-nav id="nav_collapse">
+        <b-nav is-nav-bar>
+          <b-nav-item><router-link to="/dashboard">Dashboard</router-link></b-nav-item>
+          <b-nav-item><router-link to="/TrustLib">TrustLib</router-link></b-nav-item>
+          <b-nav-item><router-link to="/Records">Records</router-link></b-nav-item>
+        </b-nav>
+      </b-collapse>
+    </b-navbar>
+    <div class="container">
+      <router-view></router-view>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -25,7 +31,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
