@@ -7,9 +7,15 @@
       </b-link>
       <b-collapse is-nav id="nav_collapse">
         <b-nav is-nav-bar>
-          <b-nav-item><router-link to="/dashboard">Dashboard</router-link></b-nav-item>
-          <b-nav-item><router-link to="/TrustLib">TrustLib</router-link></b-nav-item>
-          <b-nav-item><router-link to="/Records">Records</router-link></b-nav-item>
+          <li class="active nav-item">
+            <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
+          </li>
+          <li class="active nav-item">
+            <router-link to="/TrustLib" class="nav-link">TrustLib</router-link>
+          </li>
+          <li class="active nav-item">
+            <router-link to="/Records" class="nav-link">Records</router-link>
+          </li>
         </b-nav>
       </b-collapse>
     </b-navbar>
