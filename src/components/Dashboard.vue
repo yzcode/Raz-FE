@@ -1,11 +1,10 @@
 <template>
-  <div class="bw">
+  <div id="dashboard" class="bw">
     <div class="di">
-
       <div class="es bsk">
         <div class="brv">
           <div class="brw">
-            <h6 class="bry">Dashboards</h6>
+            <br/>
             <h2 class="brx">Overview</h2>
           </div>
         </div>
@@ -13,17 +12,8 @@
         <hr class="afx">
 
         <div class="di">
-          <div class="ep agn">
-            <div class="by afz">
-              <div id="pie_chart1" class="thirdecharts"></div>
-            </div>
-          </div>
-          <div class="ep agn">
-            <div class="by afz">
-              <div id="pie_chart2" class="thirdecharts"></div>
-            </div>
-          </div>
-
+              <div id="pie_chart1" class="halfecharts"></div>
+              <div id="pie_chart2" class="halfecharts"></div>
         </div>
 
         <hr class="afx">
@@ -32,59 +22,59 @@
 
         <hr class="afx">
 
-        <div class="by afz">
+        <div class="by afz" style="max-width: 800px; margin: auto;">
           <h6 class="azi">
             Detected Known
           </h6>
 
           <a class="rp tr yg" href="#">
-            <span>Desktop (1920x1080)</span>
-            <span id="tbltop1" class="axn"></span>
+            <span id="top1name">Desktop (1920x1080)</span>
+            <span id="top1value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Desktop (1366x768)</span>
-            <span class="axn">1,143,393</span>
+            <span id="top2name">Desktop (1920x1080)</span>
+            <span id="top2value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Desktop (1440x900)</span>
-            <span class="axn">938,287</span>
+            <span id="top3name">Desktop (1920x1080)</span>
+            <span id="top3value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Desktop (1280x800)</span>
-            <span class="axn">749,393</span>
+            <span id="top4name">Desktop (1920x1080)</span>
+            <span id="top4value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Tablet (1024x768)</span>
-            <span class="axn">695,912</span>
+            <span id="top5name">Desktop (1920x1080)</span>
+            <span id="top5value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Tablet (768x1024)</span>
-            <span class="axn">501,938</span>
+            <span id="top6name">Desktop (1920x1080)</span>
+            <span id="top6value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Phone (320x480)</span>
-            <span class="axn">392,842</span>
+            <span id="top7name">Desktop (1920x1080)</span>
+            <span id="top7value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Phone (720x450)</span>
-            <span class="axn">298,183</span>
+            <span id="top8name">Desktop (1920x1080)</span>
+            <span id="top8value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Desktop (2560x1080)</span>
-            <span class="axn">193,129</span>
+            <span id="top9name">Desktop (1920x1080)</span>
+            <span id="top9value" class="axn"></span>
           </a>
 
           <a class="rp tr yg" href="#">
-            <span>Desktop (2560x1600)</span>
-            <span class="axn">93,382</span>
+            <span id="top10name">Desktop (1920x1080)</span>
+            <span id="top10value" class="axn"></span>
           </a>
 
         </div>
@@ -108,12 +98,21 @@
       trigger: 'item',
       formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: {show: true},
+        dataView: {show: true, title: 'Data View'},
+        restore: {show: true, title: 'Restore'},
+        saveAsImage: {show: true, title: 'Save image'}
+      }
+    },
     calculable: true,
     series: [
       {
         name: 'Vistors Class',
         type: 'pie',
-        radius: '60%',
+        radius: '55%',
         center: ['50%', '50%'],
         data: [
           {value: 335, name: 'Stranger1'},
@@ -132,12 +131,21 @@
       trigger: 'item',
       formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: {show: true},
+        dataView: {show: true, title: 'Data View'},
+        restore: {show: true, title: 'Restore'},
+        saveAsImage: {show: true, title: 'Save image'}
+      }
+    },
     calculable: true,
     series: [
       {
         name: 'Vistors Class',
         type: 'pie',
-        radius: '60%',
+        radius: '55%',
         center: ['50%', '50%'],
         data: [
           {value: 200, name: 'Stranger2'},
@@ -154,6 +162,16 @@
     },
     tooltip: {
       trigger: 'axis'
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: {show: true},
+        dataView: {show: true, readOnly: false, title: 'Data View'},
+        magicType: {show: true, type: ['line', 'bar'], title: {line: 'Line', bar: 'Bar'}},
+        restore: {show: true, title: 'Restore'},
+        saveAsImage: {show: true, title: 'Save image'}
+      }
     },
     legend: {
       data: ['Known', 'Stranger']
@@ -226,8 +244,26 @@
       setTimeout(() => {
         lineChart1.setOption(option4)
       }, 5000)
-
-      document.getElementById('tbltop1').innerHTML = '1,000'
+      document.getElementById('top1name').innerHTML = 'Alice'
+      document.getElementById('top1value').innerHTML = '1,200'
+      document.getElementById('top2name').innerHTML = 'Alice'
+      document.getElementById('top2value').innerHTML = '1,200'
+      document.getElementById('top3name').innerHTML = 'Alice'
+      document.getElementById('top3value').innerHTML = '1,200'
+      document.getElementById('top4name').innerHTML = 'Alice'
+      document.getElementById('top4value').innerHTML = '1,200'
+      document.getElementById('top5name').innerHTML = 'Alice'
+      document.getElementById('top5value').innerHTML = '1,200'
+      document.getElementById('top6name').innerHTML = 'Alice'
+      document.getElementById('top6value').innerHTML = '1,200'
+      document.getElementById('top7name').innerHTML = 'Alice'
+      document.getElementById('top7value').innerHTML = '1,200'
+      document.getElementById('top8name').innerHTML = 'Alice'
+      document.getElementById('top8value').innerHTML = '1,200'
+      document.getElementById('top9name').innerHTML = 'Alice'
+      document.getElementById('top9value').innerHTML = '1,200'
+      document.getElementById('top10name').innerHTML = 'Alice'
+      document.getElementById('top10value').innerHTML = '1,200'
     }
   }
 
@@ -1370,8 +1406,7 @@
     .es {
       -webkit-box-flex: 0;
       -ms-flex: 0 0 75%;
-      flex: 0 0 75%;
-      max-width: 75%; }
+ }
     .et {
       -webkit-box-flex: 0;
       -ms-flex: 0 0 83.33333%;
