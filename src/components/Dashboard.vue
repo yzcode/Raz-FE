@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div id="dashboard" class="bw">
     <div class="di">
       <div class="es bsk">
@@ -27,56 +27,10 @@
             Detected Known
           </h6>
 
-          <a class="rp tr yg" href="#">
-            <span id="top1name">Desktop (1920x1080)</span>
-            <span id="top1value" class="axn"></span>
+          <a v-for="vistor in vistors" class="rp tr yg">
+            <div ><img :src="vistor.url" width="24px" height="24px">&nbsp&nbsp&nbsp{{ vistor.name }}</div>
+            <span class="axn">{{ vistor.count }}</span>
           </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top2name">Desktop (1920x1080)</span>
-            <span id="top2value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top3name">Desktop (1920x1080)</span>
-            <span id="top3value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top4name">Desktop (1920x1080)</span>
-            <span id="top4value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top5name">Desktop (1920x1080)</span>
-            <span id="top5value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top6name">Desktop (1920x1080)</span>
-            <span id="top6value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top7name">Desktop (1920x1080)</span>
-            <span id="top7value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top8name">Desktop (1920x1080)</span>
-            <span id="top8value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top9name">Desktop (1920x1080)</span>
-            <span id="top9value" class="axn"></span>
-          </a>
-
-          <a class="rp tr yg" href="#">
-            <span id="top10name">Desktop (1920x1080)</span>
-            <span id="top10value" class="axn"></span>
-          </a>
-
         </div>
 
       </div>
@@ -102,7 +56,7 @@
       show: true,
       feature: {
         mark: {show: true},
-        dataView: {show: true, title: 'Data View'},
+        dataView: {show: false, title: 'Data View'},
         restore: {show: true, title: 'Restore'},
         saveAsImage: {show: true, title: 'Save image'}
       }
@@ -115,16 +69,14 @@
         radius: '55%',
         center: ['50%', '50%'],
         data: [
-          {value: 335, name: 'Stranger1'},
-          {value: 310, name: 'Know1'}
         ]
       }
     ]
   }
   var option2 = {
     title: {
-      text: 'Traffic',
-      subtext: 'Know vs Stranger',
+      text: 'People',
+      subtext: 'Visit Count',
       x: 'center'
     },
     tooltip: {
@@ -135,7 +87,7 @@
       show: true,
       feature: {
         mark: {show: true},
-        dataView: {show: true, title: 'Data View'},
+        dataView: {show: false, title: 'Data View'},
         restore: {show: true, title: 'Restore'},
         saveAsImage: {show: true, title: 'Save image'}
       }
@@ -148,8 +100,6 @@
         radius: '55%',
         center: ['50%', '50%'],
         data: [
-          {value: 200, name: 'Stranger2'},
-          {value: 310, name: 'Know2'}
         ]
       }
     ]
@@ -157,7 +107,7 @@
 
   var option4 = {
     title: {
-      text: 'Acitivity of Last Month',
+      text: 'Acitivity of Last 24 Hour',
       subtext: 'Basic Data'
     },
     tooltip: {
@@ -167,7 +117,7 @@
       show: true,
       feature: {
         mark: {show: true},
-        dataView: {show: true, readOnly: false, title: 'Data View'},
+        dataView: {show: false, readOnly: false, title: 'Data View'},
         magicType: {show: true, type: ['line', 'bar'], title: {line: 'Line', bar: 'Bar'}},
         restore: {show: true, title: 'Restore'},
         saveAsImage: {show: true, title: 'Save image'}
@@ -183,7 +133,7 @@
         type: 'category',
         boundaryGap: false,
         data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16',
-          '17', '18', '19', '20', '21', '22', '23', '24']
+          '17', '18', '19', '20', '21', '22', '23']
       }
     ],
     yAxis: [
@@ -198,7 +148,7 @@
       {
         name: 'Known',
         type: 'line',
-        data: [11, 11, 15, 13, 12, 13, 10, 34, 2, 3, 5, 6, 7, 8, 1, 4, 3, 1, 2, 4, 4, 3, 1, 2],
+        data: [],
 
         markLine: {
           data: [
@@ -209,7 +159,7 @@
       {
         name: 'Stranger',
         type: 'line',
-        data: [1, 4, 2, 5, 3, 2, 0, 15, 13, 12, 13, 10, 34, 2, 3, 5, 6, 7, 8, 1, 4, 7, 11, 13],
+        data: [],
         markLine: {
           data: [
             {type: 'average', name: 'average'}
@@ -218,6 +168,7 @@
       }
     ]
   }
+  var $ = require('JQuery')
 
   export default {
     components: {
@@ -225,45 +176,47 @@
     name: 'dashboard',
     data () {
       return {
+        vistors: []
       }
     },
     mounted () {
-      var pieChart1 = echarts.init(document.getElementById('pie_chart1'))
-      pieChart1.setOption(option1)
-      setTimeout(() => {
-        pieChart1.setOption(option1)
-      }, 5000)
-      var pieChart2 = echarts.init(document.getElementById('pie_chart2'))
-      pieChart2.setOption(option2)
-      setTimeout(() => {
-        pieChart2.setOption(option2)
-      }, 5000)
+      $.getJSON('/api/topvis', (data) => {
+        this.vistors = []
+        option2.series[0].data = []
 
-      var lineChart1 = echarts.init(document.getElementById('line_chart1'))
-      lineChart1.setOption(option4)
-      setTimeout(() => {
+        for (var i = 0; i < data.length; ++i) {
+          data[i].url = '/img' + data[i].url
+          this.vistors.push(data[i])
+
+          option2.series[0].data.push({
+            value: data[i].count,
+            name: data[i].name
+          })
+          var pieChart2 = echarts.init(document.getElementById('pie_chart2'))
+          pieChart2.setOption(option2)
+        }
+      })
+
+      $.getJSON('/api/daypie', (data) => {
+        option1.series[0].data = []
+
+        for (var key in data) {
+          option1.series[0].data.push({
+            value: data[key],
+            name: key
+          })
+        }
+        var pieChart1 = echarts.init(document.getElementById('pie_chart1'))
+        pieChart1.setOption(option1)
+      })
+
+      $.getJSON('/api/daybar', (data) => {
+        option4.series[0].data = data[0]
+        option4.series[1].data = data[1]
+
+        var lineChart1 = echarts.init(document.getElementById('line_chart1'))
         lineChart1.setOption(option4)
-      }, 5000)
-      document.getElementById('top1name').innerHTML = 'Alice'
-      document.getElementById('top1value').innerHTML = '1,200'
-      document.getElementById('top2name').innerHTML = 'Alice'
-      document.getElementById('top2value').innerHTML = '1,200'
-      document.getElementById('top3name').innerHTML = 'Alice'
-      document.getElementById('top3value').innerHTML = '1,200'
-      document.getElementById('top4name').innerHTML = 'Alice'
-      document.getElementById('top4value').innerHTML = '1,200'
-      document.getElementById('top5name').innerHTML = 'Alice'
-      document.getElementById('top5value').innerHTML = '1,200'
-      document.getElementById('top6name').innerHTML = 'Alice'
-      document.getElementById('top6value').innerHTML = '1,200'
-      document.getElementById('top7name').innerHTML = 'Alice'
-      document.getElementById('top7value').innerHTML = '1,200'
-      document.getElementById('top8name').innerHTML = 'Alice'
-      document.getElementById('top8value').innerHTML = '1,200'
-      document.getElementById('top9name').innerHTML = 'Alice'
-      document.getElementById('top9value').innerHTML = '1,200'
-      document.getElementById('top10name').innerHTML = 'Alice'
-      document.getElementById('top10value').innerHTML = '1,200'
+      })
     }
   }
 

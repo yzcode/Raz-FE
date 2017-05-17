@@ -54,7 +54,7 @@
 
 <script>
 
-//  var $ = require('jquery')
+  var $ = require('jquery')
   export default {
     components: {
     },
@@ -67,18 +67,7 @@
           url: '',
           name: 'null'
         },
-        items: [{
-          id: 2,
-          time: '2015/05/01',
-          url: 'http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/durchschnittsgesichter/w(01-64).jpg',
-          name: 'Dickerson Macdonald'
-
-        }, {
-          id: 1,
-          time: '2015/05/02',
-          url: 'http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/durchschnittsgesichter/w(01-64).jpg',
-          name: 'Larsen Shaw'
-        }],
+        items: [],
         fields: {
           id: {
             label: 'Record Id',
@@ -104,7 +93,19 @@
         filter: null
       }
     },
-    mount () {
+    mounted () {
+      $.getJSON('api/getrecords', {
+        start: 0,
+        end: 100000,
+        name: ''
+      }, (data) => {
+        var nData = []
+        for (var i = 0; i < data.length; i++) {
+          data[i].url = '/img' + data[i].url
+          nData.push(data[i])
+        }
+        this.items = nData
+      })
     },
     methods: {
       details (item) {
