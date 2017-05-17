@@ -176,47 +176,62 @@
     name: 'dashboard',
     data () {
       return {
-        vistors: []
+        vistors: [],
+        interval: null
       }
     },
     mounted () {
-      $.getJSON('/api/topvis', (data) => {
-        this.vistors = []
-        option2.series[0].data = []
+      this.getData()
 
-        for (var i = 0; i < data.length; ++i) {
-          data[i].url = '/img' + data[i].url
-          this.vistors.push(data[i])
+      var self = this
+      this.interval = setInterval(function () {
+        self.getData()
+        // console.log(1111)
+      }, 5000)
+    },
+    beforeDestroy () {
+      clearInterval(this.interval)
+    },
+    methods: {
+      getData () {
+        $.getJSON('/api/topvis', (data) => {
+          this.vistors = []
+          option2.series[0].data = []
 
-          option2.series[0].data.push({
-            value: data[i].count,
-            name: data[i].name
-          })
-          var pieChart2 = echarts.init(document.getElementById('pie_chart2'))
-          pieChart2.setOption(option2)
-        }
-      })
+          for (var i = 0; i < data.length; ++i) {
+            data[i].url = '/img' + data[i].url
+            this.vistors.push(data[i])
 
-      $.getJSON('/api/daypie', (data) => {
-        option1.series[0].data = []
+            option2.series[0].data.push({
+              value: data[i].count,
+              name: data[i].name
+            })
+            var pieChart2 = echarts.init(document.getElementById('pie_chart2'))
+            pieChart2.setOption(option2)
+          }
+        })
 
-        for (var key in data) {
-          option1.series[0].data.push({
-            value: data[key],
-            name: key
-          })
-        }
-        var pieChart1 = echarts.init(document.getElementById('pie_chart1'))
-        pieChart1.setOption(option1)
-      })
+        $.getJSON('/api/daypie', (data) => {
+          option1.series[0].data = []
 
-      $.getJSON('/api/daybar', (data) => {
-        option4.series[0].data = data[0]
-        option4.series[1].data = data[1]
+          for (var key in data) {
+            option1.series[0].data.push({
+              value: data[key],
+              name: key
+            })
+          }
+          var pieChart1 = echarts.init(document.getElementById('pie_chart1'))
+          pieChart1.setOption(option1)
+        })
 
-        var lineChart1 = echarts.init(document.getElementById('line_chart1'))
-        lineChart1.setOption(option4)
-      })
+        $.getJSON('/api/daybar', (data) => {
+          option4.series[0].data = data[0]
+          option4.series[1].data = data[1]
+
+          var lineChart1 = echarts.init(document.getElementById('line_chart1'))
+          lineChart1.setOption(option4)
+        })
+      }
     }
   }
 

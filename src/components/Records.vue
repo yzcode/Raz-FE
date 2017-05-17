@@ -61,6 +61,7 @@
     name: 'records',
     data () {
       return {
+        interval: null,
         itemDetail: {
           id: -1,
           time: 'null',
@@ -94,22 +95,34 @@
       }
     },
     mounted () {
-      $.getJSON('api/getrecords', {
-        start: 0,
-        end: 100000,
-        name: ''
-      }, (data) => {
-        var nData = []
-        for (var i = 0; i < data.length; i++) {
-          data[i].url = '/img' + data[i].url
-          nData.push(data[i])
-        }
-        this.items = nData
-      })
+      this.getData()
+
+      var self = this
+      this.interval = setInterval(function () {
+        self.getData()
+        // console.log(1111)
+      }, 5000)
+    },
+    beforeDestroy () {
+      clearInterval(this.interval)
     },
     methods: {
       details (item) {
         this.itemDetail = item
+      },
+      getData () {
+        $.getJSON('api/getrecords', {
+          start: 0,
+          end: 100000,
+          name: ''
+        }, (data) => {
+          var nData = []
+          for (var i = 0; i < data.length; i++) {
+            data[i].url = '/img' + data[i].url
+            nData.push(data[i])
+          }
+          this.items = nData
+        })
       }
     }
   }

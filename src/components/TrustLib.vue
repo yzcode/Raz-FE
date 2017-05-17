@@ -39,14 +39,9 @@
       }
     },
     mounted () {
-      $.getJSON('/api/getfaces', (data) => {
-        var newFaces = []
-        for (var i = 0; i < data.length; ++i) {
-          data[i].url = '/img' + data[i].url
-          newFaces.push(data[i])
-        }
-        this.faces = newFaces
-      })
+      this.getData()
+    },
+    beforeDestroy () {
     },
     methods: {
       submit (e) {
@@ -68,6 +63,16 @@
         $.get('/api/trustdelface', {file_hash: hash}, (data) => {
           alert(data)
           location.reload()
+        })
+      },
+      getData () {
+        $.getJSON('/api/getfaces', (data) => {
+          var newFaces = []
+          for (var i = 0; i < data.length; ++i) {
+            data[i].url = '/img' + data[i].url
+            newFaces.push(data[i])
+          }
+          this.faces = newFaces
         })
       }
     }
